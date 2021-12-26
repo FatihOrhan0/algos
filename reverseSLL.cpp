@@ -114,23 +114,5 @@ Node * reverseGroup(Node * root, int k) {
 }
 
 int main() { 
-    Node * n = new Node(3);
-    n->next = new Node(4);
-    n->next->next = new Node(5);
-    n->next->next->next = new Node(6);
-    n->next->next->next->next = new Node(7);
-    n->next->next->next->next->next = new Node(8);
-    n->next->next->next->next->next->next = new Node(9);
-    n->next->next->next->next->next->next->next = new Node(10);
-    n->next->next->next->next->next->next->next->next = new Node(11);
-    Node * r = reverseGroup(n, 3);
-    print(r);
-    /* Node * a = new Node(1);
-    a->next = new Node(2);
-    Node * reversed = reverse(a, 2);
-    print(reversed); */
-    /* delete n->next->next->next;
-    delete n->next->next;
-    delete n->next;
-    delete n; */
+    /*test cases here*/
 }
