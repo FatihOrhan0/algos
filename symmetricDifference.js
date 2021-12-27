@@ -24,8 +24,8 @@ function sym(args) {
         for (var j = 0; j < arguments[i].length; j++)
             answer.push(arguments[i][j]);
     }
-    console.log(answer);
     return answer;
 }
 
-sym([1, 2, 3], [5, 2, 1, 4], [2, 6, 8]);
+let answer = sym([1, 2, 3], [5, 2, 1, 4], [2, 6, 8]);
+//answer is [ 3, 5, 4, 2, 6, 8 ].
