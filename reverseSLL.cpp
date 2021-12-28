@@ -1,3 +1,6 @@
+//a file that has functions for finding the size of, printing, reversing,
+//and reversing in groups of sll
+
 #include <iostream>
 
 class Node { 
@@ -48,11 +51,6 @@ Node * reverse(Node * root, unsigned int size) {
     root->next = NULL;
     return c;
 }
-
-//a b c f e d g h 
-//c b a f e d g h
-//a b c d e f g h i 
-//h g f e d c b a
 
 //for given prev, store first, go k steps further 
 //store the further(last) and further + 1(beyond)
