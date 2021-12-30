@@ -1,4 +1,7 @@
+//current runtime is horrible and will be improven later on.
 //this file contains a function to solve sudoku puzzles
+//Important assumption: given sudoku has a single solution
+//future implementation: create a function to get all solutions to a given sudoku
 
 #include <vector>
 #include <iostream>
@@ -64,14 +67,43 @@ void sudokuSolver(std::vector<std::vector<char> > & board) {
         }
         //if the  placement could not be done, start backtracking
         if (board[empties[i].first][empties[i].second] == '.') { 
-            while (i > 0) { 
-                
+            bool changed = true;
+            while (i > 0 && changed) { 
+                i--; 
+                int index = (int) board[empties[i].first][empties[i].second]
+                 - (int) '1';   
+                board[empties[i].first][empties[i].second] = '.';
+                for (int j = index; j < 9; j++) { 
+                    if (checkCol(board, empties[i].first, numbers[j]) &&
+                        checkRow(board, empties[i].second, numbers[j]) && 
+                        checkSquare(board, empties[i].first, empties[i].second,
+                        numbers[j])) { 
+                board[empties[i].first][empties[i].second] = numbers[j];
+                changed = false;
+                break;
+                    }
+                }
             }
-        }
+        } 
     }
 }
 
 
 int main() { 
-    std::cout << "Hello World";
+    std::vector<std::vector<char> > board = {{'5','3','4','6','7','8','9','1','2'},
+                                            {'6','7','2','1','9','5','3','4','8'},
+                                            {'.','9','8','.','4','2','5','6','7'},
+                                            {'8','5','9','7','6','1','4','2','3'},
+                                            {'4','2','6','8','5','3','7','9','1'},
+                                            {'7','1','3','9','2','4','8','5','6'},
+                                            {'9','6','1','5','3','7','2','8','4'},
+                                            {'.','.','.','4','1','9','.','.','5'},
+                                            {'.','.','.','.','8','.','.','7','9'}};
+    sudokuSolver(board);
+    for (int i = 0; i < 9; i++) { 
+        for (int j = 0; j < 9; j++) { 
+            std::cout << board[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 }
