@@ -99,4 +99,10 @@ int main() {
                                             {'7','4','.','.','.','.','3','.','8'},
                                             {'.','.','5','.','.','2','.','.','.'}};
     sudokuSolver(board);
+    for (unsigned int i = 0; i < board.size(); i++) { 
+        for (unsigned int j = 0; j < board[0].size(); j++) { 
+            std::cout << board[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 }
