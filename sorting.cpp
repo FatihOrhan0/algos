@@ -20,6 +20,22 @@ void bubbleSort(std::vector<T> & vec) {
     }
 }
 
+template <class T> 
+void insertionSort(std::vector<T> & vec) { 
+    for (unsigned int i = 0; i < vec.size() - 1; i++) { 
+        unsigned int j = i + 1;
+        while (j > 0) {
+            if (vec[j] < vec[j - 1]) { 
+                std::swap(vec[j], vec[j - 1]);
+                j--;
+            }
+            else { 
+                break;
+            }
+        }
+    }
+}
+
 template <class T>
 void quickSort(std::vector<T> & vec, int low, int high) { 
     if (low >= high) { return; }
@@ -51,8 +67,6 @@ int main() {
     quickSort<int>(nums);
     print(nums); */
     std::vector<int> nums2 = {3, 7, 1, 8, 4, 11, 20, 5};
-    print(nums2);
-    quickSort(nums2);
     print(nums2);
     bubbleSort(nums2);
     print(nums2);
