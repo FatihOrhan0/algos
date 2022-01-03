@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
 
 template <class T>
 void print(std::vector<T> & vec) { 
@@ -100,7 +103,23 @@ std::vector<T> merge(const std::vector<T> & vec1, std::vector<T> & vec2) {
 
 template <class T> 
 void mergeSort(std::vector<T> & vec) { 
-
+    if (vec.size() < 2) { 
+        return;
+    }
+    else { 
+        std::vector<T> first;
+        std::vector<T> second;
+        for (unsigned int i = 0; i < vec.size() / 2; i++) { 
+            first.push_back(vec[i]);
+        }
+        for (unsigned int i = vec.size() / 2; i < vec.size(); i++) { 
+            second.push_back(vec[i]);
+        }
+        mergeSort(first);
+        mergeSort(second);
+        vec = merge(first, second);
+    }
+    
 }
 
 template <class T> 
@@ -109,17 +128,13 @@ void heapSort(std::vector<T> & vec) {
 }
 
 int main() { 
-    //quicksort test:
-    std::vector<int> nums(200);
-    for (int i = 0; i < 200; i++) { 
-        nums[i] = 200 - i;
-    }
-    print(nums);
-    std::cout << "sorted:" << std::endl;
-    quickSort<int>(nums);
-    print(nums); 
-    std::vector<int> nums2 = {3, 7, 1, 8, 4, 11, 20, 5};
-    print(nums2);
-    selectionSort(nums2);
-    print(nums2);
+    std::vector<int> smaller = {1, 6, 8, 11, 20, 31, 55};
+    std::vector<int> greater = {3, 7, 24, 45, 87, 102, 126};
+    std::vector<int> combined = merge(smaller, greater);
+    print(combined);
+
+    shuffle(combined.begin(), combined.end(), std::default_random_engine());
+    print(combined);
+    mergeSort(combined);
+    print(combined);
 }
