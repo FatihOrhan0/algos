@@ -134,10 +134,10 @@ template <class T>
 void heapifySingle(std::vector<T> & vec, unsigned int i) { 
     T min = vec[i];
     bool right = false;
-    if (vec[leftChild(i)] < vec[i] && leftChild(i) < vec.size()) { 
+    if (leftChild(i) < vec.size() && vec[leftChild(i)] < vec[i]) { 
         min = vec[leftChild(i)];
     }
-    if (vec[rightChild(i)] < min && rightChild(i) < vec.size()) { 
+    if (rightChild(i) < vec.size()  && vec[rightChild(i)] < min) { 
         min = vec[rightChild(i)];
         right = true;
     }
@@ -151,8 +151,10 @@ void heapifySingle(std::vector<T> & vec, unsigned int i) {
 
 template <class T> 
 void heapify(std::vector<T> & vec) { 
-    for (unsigned int i = vec.size() / 2; i >= 0; i--) { 
+    for (unsigned int i = (vec.size() / 2); ; i--) { 
+        std::cout << i << std::endl;
         heapifySingle(vec, i);
+        if (i == 0) break;
     }
 }
 
