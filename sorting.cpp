@@ -131,30 +131,43 @@ unsigned int rightChild(unsigned int i) {
 }
 
 template <class T> 
-void heapifySingle(std::vector<T> & vec, unsigned int i) { 
-    T min = vec[i];
-    bool right = false;
-    if (leftChild(i) < vec.size() && vec[leftChild(i)] < vec[i]) { 
-        min = vec[leftChild(i)];
-    }
-    if (rightChild(i) < vec.size()  && vec[rightChild(i)] < min) { 
-        min = vec[rightChild(i)];
-        right = true;
-    }
-    if (min < vec[i] && !right) { 
-        std::swap(vec[i], vec[leftChild(i)]);
-    }
-    else if (min < vec[i] && right) { 
-        std::swap(vec[i], vec[rightChild(i)]);
+void percolateDown(std::vector<T> & vec, unsigned int i) { 
+    while (i < vec.size()) { 
+        bool left = false;
+        bool right = false;
+        if (leftChild(i) < vec.size() && vec[i] > vec[leftChild(i)]) { 
+            left = true;
+        }
+        if (rightChild(i) < vec.size()) { 
+            if (left) { 
+                if (vec[leftChild(i)] > vec[rightChild(i)]) { 
+                    right = true;
+                }
+            }
+            else { 
+                if (vec[i] > vec[rightChild(i)]) { 
+                    right = true;
+                }
+            }
+        }
+        if (left && !right) { 
+            std::swap(vec[i], vec[leftChild(i)]);
+            i = leftChild(i);
+        }
+        else if (right) { 
+            std::swap(vec[i], vec[rightChild(i)]);
+            i = rightChild(i);
+        }
+        else { 
+            break;
+        }
     }
 }
 
 template <class T> 
 void heapify(std::vector<T> & vec) { 
-    for (unsigned int i = (vec.size() / 2); ; i--) { 
-        std::cout << i << std::endl;
-        heapifySingle(vec, i);
-        if (i == 0) break;
+    for (int i = vec.size() / 2; i >= 0; i--) { 
+        percolateDown(vec, (unsigned int) i);
     }
 }
 
