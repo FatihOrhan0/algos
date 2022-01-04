@@ -151,7 +151,7 @@ void heapifySingle(std::vector<T> & vec, unsigned int i) {
 
 template <class T> 
 void heapify(std::vector<T> & vec) { 
-    for (unsigned int i = vec.size() / 2; i > 0; i--) { 
+    for (unsigned int i = vec.size() / 2; i >= 0; i--) { 
         heapifySingle(vec, i);
     }
 }
@@ -169,6 +169,6 @@ int main() {
 
     shuffle(combined.begin(), combined.end(), std::default_random_engine());
     print(combined);
-    mergeSort(combined);
+    heapify(combined);
     print(combined);
 }
