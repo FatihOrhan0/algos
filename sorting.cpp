@@ -173,7 +173,14 @@ void heapify(std::vector<T> & vec) {
 
 template <class T> 
 void heapSort(std::vector<T> & vec) { 
-    
+    std::vector<T> sorted(vec.size());
+    for (unsigned int i = 0; i < sorted.size(); i++) { 
+        heapify(vec);
+        sorted[i] = vec[0];
+        std::swap(vec[0], vec[vec.size() - 1]);
+        vec.pop_back();
+    }
+    vec = sorted;
 }
 
 int main() { 
@@ -182,8 +189,8 @@ int main() {
     std::vector<int> combined = merge(smaller, greater);
     print(combined);
 
-    shuffle(combined.begin(), combined.end(), std::default_random_engine());
+    shuffle(combined.begin(), combined.end(), std::default_random_engine(20));
     print(combined);
-    heapify(combined);
+    heapSort(combined);
     print(combined);
 }
