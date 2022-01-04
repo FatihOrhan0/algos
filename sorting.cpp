@@ -122,6 +122,15 @@ void mergeSort(std::vector<T> & vec) {
     
 }
 
+unsigned int leftChild(unsigned int i) { 
+    return 2 * i + 1;
+}
+
+template <class T> 
+void heapify(std::vector<T> & vec) { 
+
+}
+
 template <class T> 
 void heapSort(std::vector<T> & vec) { 
     
