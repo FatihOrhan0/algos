@@ -126,9 +126,34 @@ unsigned int leftChild(unsigned int i) {
     return 2 * i + 1;
 }
 
+unsigned int rightChild(unsigned int i) { 
+    return 2 * i + 2;
+}
+
+template <class T> 
+void heapifySingle(std::vector<T> & vec, unsigned int i) { 
+    T min = vec[i];
+    bool right = false;
+    if (vec[leftChild(i)] < vec[i] && leftChild(i) < vec.size()) { 
+        min = vec[leftChild(i)];
+    }
+    if (vec[rightChild(i)] < min && rightChild(i) < vec.size()) { 
+        min = vec[rightChild(i)];
+        right = true;
+    }
+    if (min < vec[i] && !right) { 
+        std::swap(vec[i], vec[leftChild(i)]);
+    }
+    else if (min < vec[i] && right) { 
+        std::swap(vec[i], vec[rightChild(i)]);
+    }
+}
+
 template <class T> 
 void heapify(std::vector<T> & vec) { 
-
+    for (unsigned int i = vec.size() / 2; i > 0; i--) { 
+        heapifySingle(vec, i);
+    }
 }
 
 template <class T> 
