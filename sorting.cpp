@@ -173,12 +173,13 @@ void heapify(std::vector<T> & vec) {
 
 template <class T> 
 void heapSort(std::vector<T> & vec) { 
+    heapify(vec);
     std::vector<T> sorted(vec.size());
     for (unsigned int i = 0; i < sorted.size(); i++) { 
-        heapify(vec);
         sorted[i] = vec[0];
         std::swap(vec[0], vec[vec.size() - 1]);
         vec.pop_back();
+        percolateDown(vec, 0);
     }
     vec = sorted;
 }
