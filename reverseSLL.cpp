@@ -37,11 +37,10 @@ Node * reverse(Node * root, unsigned int size) {
         root->next = NULL;
         return temp;
     }
-    Node * temp = root;
     Node * p = root;
     Node * c = root->next;
     Node * n = root->next->next;
-    for (int i = 0; i < size && n; i++) {
+    for (unsigned int i = 0; i < size && n; i++) {
         c->next = p;
         p = c;
         c = n;
@@ -50,6 +49,26 @@ Node * reverse(Node * root, unsigned int size) {
     c->next = p;
     root->next = NULL;
     return c;
+}
+
+
+//solution to https://leetcode.com/problems/swap-nodes-in-pairs/
+//a very straightforward recursive algorithm.
+Node* swapPairs(Node* head) {
+    if (!head || !head->next) return head;
+    if (!head->next->next) { 
+        Node * temp = head->next;
+        temp->next = head;
+        head->next = NULL;
+        return temp;
+    }
+    else { 
+        Node * temp = swapPairs(head->next->next);
+        Node * tempNext = head->next;
+        head->next = temp;
+        tempNext->next = head;
+        return tempNext;
+    }
 }
 
 //for given prev, store first, go k steps further 
@@ -87,7 +106,6 @@ Node * reverseGroup(Node * root, int k) {
                 return lastGroup;
         }
         else { 
-            //5 4 3 6 7 8 9 10 11 12
             if (!beyond) return start;
             laterPrev = first;
             beyond = last->next;
@@ -112,5 +130,13 @@ Node * reverseGroup(Node * root, int k) {
 }
 
 int main() { 
-    /*test cases here*/
+    Node * a = new Node(1);
+    a->next = new Node(2);
+    a->next->next = new Node(3);
+    a->next->next->next = new Node(4);
+    a->next->next->next->next = new Node(5);
+    // a->next->next->next = new Node(6);
+
+    a = swapPairs(a);
+    print(a);
 }
