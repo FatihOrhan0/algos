@@ -12,27 +12,47 @@ int trap(const std::vector<int> & height) {
         leftIndex++;
     }
     while (leftIndex < height.size()) {
-        std::cout << leftIndex << " " << total << std::endl;
-        if (leftIndex == height.size() - 1) { 
-            return total;
-        } 
-        if (leftIndex + 1 < height.size() && height[leftIndex + 1] >= height[leftIndex]) { 
+        // std::cout << leftIndex << " " << height[leftIndex] << " " << total << std::endl; 
+        if (height[leftIndex + 1] >= height[leftIndex]) { 
             leftIndex++;
             continue;
         }
+
         unsigned int localIndex = leftIndex + 1;
         unsigned int localIndex2 = leftIndex;
         bool exceed = false;
-        while (height[localIndex] < height[leftIndex]) { 
+        while (height[localIndex] <= height[leftIndex]) { 
             localIndex++;
             if (localIndex == height.size()) { 
                 exceed = true;
                 break;
             }
-            // consider the boundary case here.
         }
+
         if (exceed) { 
+            localIndex = leftIndex + 1;
+            int max = height[leftIndex + 1];
+            int maxIndex = leftIndex + 1;
+            bool increased = false; 
+            while (localIndex < height.size()) { 
+                if (height[localIndex] > height[localIndex - 1]) { 
+                    increased = true;
+                }
+                if (height[localIndex] >= max) {
+                    max = height[localIndex];
+                    maxIndex = localIndex;
+                }
+                localIndex++;
+            }
+            std::cout << max << " " << total << std::endl;
+            if (!increased) { 
+                return total;
+            }
             leftIndex++;
+            for (; leftIndex < maxIndex; leftIndex++) { 
+                total += max - height[leftIndex];
+                // std::cout << leftIndex << " aa " << max << " " << total << std::endl;
+            }
             continue;
         }
         unsigned int min = std::min(height[localIndex], height[leftIndex]);
@@ -46,6 +66,6 @@ int trap(const std::vector<int> & height) {
 }
 
 int main() { 
-    std::vector<int> heights = { 4,2,0,3,2,5 };
+    std::vector<int> heights = {5, 4, 1, 2};
     std::cout << trap(heights);
 }
