@@ -29,9 +29,8 @@ int trap(const std::vector<int> & height) {
 
         if (exceed) { 
             std::vector<int> temp(height.size() - leftIndex);
-            for (unsigned int i = leftIndex; i < height.size(); i++) { 
-                temp[i - leftIndex] = height[leftIndex];
-                leftIndex++;
+            for (unsigned int i = 0; i < height.size() - leftIndex; i++) { 
+                temp[i] = height[leftIndex + 1];
             }
             std::reverse(temp.begin(), temp.end());
             total += trap(temp);
@@ -46,10 +45,11 @@ int trap(const std::vector<int> & height) {
         leftIndex = localIndex;
         leftIndex++;
     }
+    std::cout << "total: " << total << std::endl;
     return total;
 }
 
 int main() { 
-    std::vector<int> heights = {5, 4, 1, 2};
+    std::vector<int> heights = {0,1,0,2,1,0,1,3,2,1,2,1};
     std::cout << "trap: " << trap(heights);
 }
