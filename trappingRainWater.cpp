@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 //This file is a solution to the below problem
 //https://leetcode.com/problems/trapping-rain-water/submissions/
@@ -8,18 +9,15 @@
 int trap(const std::vector<int> & height) { 
     int total = 0;
     unsigned int leftIndex = 0;
-    while (leftIndex < height.size() && height[leftIndex] == 0) { 
-        leftIndex++;
-    }
-    while (leftIndex < height.size()) {
-        // std::cout << leftIndex << " " << height[leftIndex] << " " << total << std::endl; 
+    while (leftIndex < height.size() - 1) {
+
         if (height[leftIndex + 1] >= height[leftIndex]) { 
             leftIndex++;
             continue;
         }
 
         unsigned int localIndex = leftIndex + 1;
-        unsigned int localIndex2 = leftIndex;
+        unsigned int localIndex2 = leftIndex + 1;
         bool exceed = false;
         while (height[localIndex] <= height[leftIndex]) { 
             localIndex++;
@@ -30,42 +28,28 @@ int trap(const std::vector<int> & height) {
         }
 
         if (exceed) { 
-            localIndex = leftIndex + 1;
-            int max = height[leftIndex + 1];
-            int maxIndex = leftIndex + 1;
-            bool increased = false; 
-            while (localIndex < height.size()) { 
-                if (height[localIndex] > height[localIndex - 1]) { 
-                    increased = true;
-                }
-                if (height[localIndex] >= max) {
-                    max = height[localIndex];
-                    maxIndex = localIndex;
-                }
-                localIndex++;
+            std::vector<int> temp(height.size() - leftIndex);
+            for (unsigned int i = leftIndex; i < height.size(); i++) { 
+                temp[i - leftIndex] = height[leftIndex];
+                leftIndex++;
             }
-            std::cout << max << " " << total << std::endl;
-            if (!increased) { 
-                return total;
-            }
-            leftIndex++;
-            for (; leftIndex < maxIndex; leftIndex++) { 
-                total += max - height[leftIndex];
-                // std::cout << leftIndex << " aa " << max << " " << total << std::endl;
-            }
-            continue;
+            std::reverse(temp.begin(), temp.end());
+            total += trap(temp);
+            return total;
         }
+        
         unsigned int min = std::min(height[localIndex], height[leftIndex]);
         while (localIndex2 < localIndex) { 
             total += min - height[localIndex2];
             localIndex2++;
         }
         leftIndex = localIndex;
+        leftIndex++;
     }
     return total;
 }
 
 int main() { 
     std::vector<int> heights = {5, 4, 1, 2};
-    std::cout << trap(heights);
+    std::cout << "trap: " << trap(heights);
 }
