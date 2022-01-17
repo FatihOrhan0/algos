@@ -7,7 +7,7 @@
 //https://leetcode.com/problems/group-anagrams/
 
 const int primes[26] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 
-59, 61, 67, 71, 73, 79, 83, 89, 97};
+59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
 
 int encryptWord(const std::string & s) { 
     int e = 1;
@@ -37,7 +37,7 @@ std::vector<std::vector<std::string> > groupAnagrams(std::vector<std::string> & 
 }
 
 int main() { 
-    std::vector<std::string> words = {"eat","tea","tan","ate","nat","bat"};
+   std::vector<std::string> words = {"eat","tea","tan","ate","nat","bat"};
     auto answer = groupAnagrams(words);
     for(int i = 0; i < answer.size(); i++) { 
         for(int j = 0; j < answer[i].size(); j++) { 
