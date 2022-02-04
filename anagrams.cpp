@@ -4,17 +4,14 @@
 #include <vector>
 
 
-
-using namespace std;
-
 void revert(std::unordered_map<char, std::pair<int, int> > & letters)     { 
     for (auto itr = letters.begin(); itr != letters.end(); itr++) { 
         itr->second.first = itr->second.second;
     }
 }
-vector<int> findAnagrams(string s, string p) {
-    unordered_map<char, pair<int, int> > letters;
-    vector<int> answer;
+std::vector<int> findAnagrams(std::string s, std::string p) {
+    std::unordered_map<char, std::pair<int, int> > letters;
+    std::vector<int> answer;
     for (unsigned int i = 0; i < p.size(); i++) { 
         auto f = letters.find(p[i]);
         if (f != letters.end()) { 
@@ -44,8 +41,9 @@ vector<int> findAnagrams(string s, string p) {
 }
 
 int main() { 
-    vector<int> a = findAnagrams("kemal", "kemale");
+    std::vector<int> a = findAnagrams("kemal", "kema");
     for (int i = 0; i < a.size(); i++) { 
-        cout << a[i] << " ";
+        std::cout << a[i] << " ";
     }
+    std::cout << std::endl;
 }
