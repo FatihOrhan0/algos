@@ -20,13 +20,9 @@ func findGCD(a int, b int) int{
 		return min(a, b)
 	}
 	if (a > b) {
-		mul := a / b
-		remainder := a - mul * b
-		return findGCD(remainder, b)
+		return findGCD(a - (a / b) * b, b)
 	} else { 
-		mul := b / a
-		remainder := b - mul * a 
-		return findGCD(remainder, a)
+		return findGCD(b - (b / a) * a , a)
 	}
 }
 
