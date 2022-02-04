@@ -28,8 +28,9 @@ vector<int> findAnagrams(string s, string p) {
     for (auto itr = letters.begin(); itr != letters.end(); itr++) { 
         std::cout << itr->first << " " << itr->second.first << std::endl;
     }
-    for (int i = 0; i < p.size(); i++) { 
-        for (unsigned int j = 0; j < s.size(); j++) { 
+    for (unsigned int j = 0; j < s.size(); j++) { 
+        for (int i = 0; i < p.size(); i++, j++) { 
+            if (j >= s.size()) { return answer; }
             auto f = letters.find(s[j]);
             if (f == letters.end()) { 
                 std::cout << j << " " << i << " " << s[j] << " NULL" << std::endl;
@@ -42,7 +43,7 @@ vector<int> findAnagrams(string s, string p) {
                 std::cout << "1" << std::endl;
             }
             if (i == p.size() - 1) { 
-                answer.push_back(j);
+                answer.push_back(j - p.size() + 1);
                 revert(letters); 
                 std::cout << "3" << std::endl;
             }
