@@ -41,13 +41,11 @@ int trap(const std::vector<int> & height) {
     while (leftIndex < height.size() - 1 && height[leftIndex] <= height[leftIndex + 1]) { 
         leftIndex++;
     }
-    std::cout << "leftIndex: " << leftIndex << std::endl;
     unsigned int tempIndex = leftIndex;
     tempIndex++;
     while (tempIndex < height.size() && height[tempIndex] < height[leftIndex]) { 
         tempIndex++;
     }
-    std::cout << "leftIndex: " << leftIndex << " " << tempIndex << std::endl;
     if (tempIndex == height.size()) { 
         std::pair<int, int> max = findMax(height, leftIndex);
         if (leftIndex == height.size() - 1) { return total; }
@@ -63,7 +61,6 @@ int trap(const std::vector<int> & height) {
         }
     }
     leftIndex = tempIndex;
-    std::cout << "leftIndex: " << leftIndex << " " << tempIndex << std::endl;
     }
     return total;
 }
