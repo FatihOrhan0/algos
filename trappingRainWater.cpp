@@ -1,6 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+// #include
+
+//a helper function to find the max number's index from given index excluding the given index
+//returns 0 if the target index is not reasonable
+std::pair<int, int> findMax(const std::vector<int> & vec, int target) { 
+    int max = 0;
+    int maxIndex = -1;
+    target++;
+    while (target < (int) vec.size()) { 
+        if (vec[target] > max) { 
+            max = vec[target];
+            maxIndex = target;
+        }
+        target++;
+    }
+
+    return std::make_pair(max, maxIndex);
+}
 
 //This file is a solution to the below problem
 //https://leetcode.com/problems/trapping-rain-water/submissions/
@@ -31,7 +49,12 @@ int trap(const std::vector<int> & height) {
     }
     std::cout << "leftIndex: " << leftIndex << " " << tempIndex << std::endl;
     if (tempIndex == height.size()) { 
+        std::pair<int, int> max = findMax(height, leftIndex);
+        if (leftIndex == height.size() - 1) { return total; }
         leftIndex++;
+        for (; leftIndex < (unsigned int) max.second; leftIndex++) { 
+            total += max.first - height[leftIndex];
+        }
         continue;
     }
     else { 
