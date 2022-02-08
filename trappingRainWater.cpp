@@ -10,7 +10,7 @@ std::pair<int, int> findMax(const std::vector<int> & vec, int target) {
     int maxIndex = -1;
     target++;
     while (target < (int) vec.size()) { 
-        if (vec[target] > max) { 
+        if (vec[target] >= max) { 
             max = vec[target];
             maxIndex = target;
         }
@@ -66,7 +66,7 @@ int trap(const std::vector<int> & height) {
 }
 
 int main() { 
-    std::vector<int> heights = {0,1,0,5,0,3};
+    std::vector<int> heights = {0, 2, 0};
     std::vector<int> heights2 = {2, 0, 0,0, 8};
     std::cout << trap(heights) << std::endl;
     std::cout << trap(heights2);
