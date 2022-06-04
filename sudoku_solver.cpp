@@ -1,10 +1,45 @@
 //this file contains a function to solve sudoku puzzles
 //Important assumption: given sudoku has a single solution
-//future implementation: create a function to get all solutions to a given sudoku
+//future implementation: create a function to check if a sudoku has only one solution, 
+//generalize to NxN sudokus
 
 #include <vector>
 #include <iostream>
 #include <utility>
+
+//checking the validity of a sudoku, helper function
+bool checkNum(int num, vector<vector<char> > & board) {
+        assert(num >= 0 && num < 10);
+        bool arr[27];
+        for (int i = 0; i < 27; i++) arr[i] = false;
+        for (int i = 0; i < 9; i++) { 
+            if (board[i][num] != '.' && arr[board[i][num] - '1'] == true) {
+                cout << "1: " << i << " " << num;
+                return false;
+            }    
+            if (board[num][i] != '.' && arr[board[num][i] - '1' + 9] == true) {
+                cout << "2: " << i << " " << num;
+                return false;
+            }
+            int col = (num % 3) * 3 + i % 3, row = i / 3 + (num / 3) * 3;
+            if (board[row][col] != '.' && arr[board[row][col] - '1' + 18] == true) {
+                cout << "3: " << i << " " << num << " " << col << " " << row;
+                return false;
+            } 
+            
+            if (board[i][num] != '.') arr[board[i][num] - '1'] = true;
+            if (board[num][i] != '.') arr[board[num][i] - '1' + 9] = true;
+            if (board[row][col] != '.') arr[board[row][col] - '1' + 18] = true;
+        }
+        return true;
+    }
+//main function to check the validity of a sudoku
+bool isValidSudoku(vector<vector<char> > & board) {
+    for (int i = 0; i < 9; i++) { 
+        if (!checkNum(i, board)) return false;
+    }
+    return true;
+}
 
 char numbers[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
@@ -89,19 +124,28 @@ void sudokuSolver(std::vector<std::vector<char> > & board) {
 
 
 int main() { 
-    std::vector<std::vector<char> > board = {{'.','.','.','.','.','.','.','.','.'},
-                                            {'.','7','4','.','.','1','.','6','9'},
-                                            {'.','5','.','.','3','.','7','.','4'},
-                                            {'.','9','3','7','2','.','.','5','.'},
-                                            {'.','.','.','.','.','6','.','.','.'},
-                                            {'.','.','.','8','9','.','.','.','7'},
-                                            {'.','.','6','.','.','.','.','1','.'},
-                                            {'7','4','.','.','.','.','3','.','8'},
-                                            {'.','.','5','.','.','2','.','.','.'}};
+    std::vector<std::vector<char> > board = {{'.','.','.','.','5','.','.','.','.'},
+                                            {'.','2','.','1','.','8','.','9','.'},
+                                            {'4','.','.','.','.','.','6','.','.'},
+                                            {'.','.','.','.','.','7','.','.','.'},
+                                            {'.','8','.','3','.','9','.','1','.'},
+                                            {'.','.','2','.','.','.','.','.','8'},
+                                            {'.','.','.','.','2','.','.','5','.'},
+                                            {'.','.','6','5','.','3','9','.','.'},
+                                            {'.','3','.','.','7','.','.','.','.'}};
     sudokuSolver(board);
-    for (unsigned int i = 0; i < board.size(); i++) { 
+    /* for (unsigned int i = 0; i < board.size(); i++) { 
         for (unsigned int j = 0; j < board[0].size(); j++) { 
             std::cout << board[i][j] << " ";
+        }
+        std::cout << std::endl;
+    } */
+    std::vector<char> tempRow(9, 'a');
+    board.push_back(tempRow);
+    board[3].push_back('\n');
+    for (auto i : board) { 
+        for (auto j : i) { 
+            std::cout << j << " ";
         }
         std::cout << std::endl;
     }
