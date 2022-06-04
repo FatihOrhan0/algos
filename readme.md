@@ -1,4 +1,4 @@
-# generic 
+# Common algorithms/problems
 
 Contains some useful functions and some solutions to practice problems.
 
