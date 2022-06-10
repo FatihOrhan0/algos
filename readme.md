@@ -1,5 +1,3 @@
 # Common algorithms/problems
 
-Contains some useful functions and some solutions to practice problems.
-
-More descriptions will be added as this repo gets evolved.
+This repository contains some very common algorithm implementations and solutions to various computation problems.
