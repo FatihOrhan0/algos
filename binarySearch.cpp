@@ -44,6 +44,28 @@ int binarySearch(const std::vector<T> & sv, const T & val) {
     return mid;
 }
 
+//binary search for duplicates problem: https://leetcode.com/problems/single-element-in-a-sorted-array/
+class Solution {
+public:
+    int binarySearch(vector<int> & nums, int left, int right) {
+        int mid = left + (right - left) / 2;
+        if (left >= right) return nums[right];
+        if (nums[mid - 1] != nums[mid] and nums[mid + 1] != nums[mid]) return nums[mid];
+        if (nums[mid - 1] == nums[mid]) { 
+            if ((mid - 1 - left) % 2 == 0) return binarySearch(nums, mid + 1, right);
+            else { return binarySearch(nums, left, mid - 2); }
+        }
+        else { 
+            if ((right - mid + 1) % 2 == 0) return binarySearch(nums, left, mid - 1);
+            else { return binarySearch(nums, mid + 2, right); }
+        }
+        
+    }
+    int singleNonDuplicate(vector<int> & nums) {
+        return binarySearch(nums, 0, nums.size() - 1);
+    }
+};
+
 int main() { 
     std::vector<int> abc;
     for (double i = 0; i < 2000; i++) { 
