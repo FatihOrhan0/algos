@@ -53,7 +53,7 @@ bool comp(const vector<int> & v1, const vector<int> & v2) {
 class Solution {
 public:
     int earliestAcq(vector<vector<int>> & logs, int n) {
-        sort(logs.begin(), logs.end(), comp);
+        sort(logs.begin(), logs.end(), [&] (const vector<int> & v1, const vector<int> & v2) { return v1[0] < v2[0]; });
         Disjoint d(n);
         for (auto vec : logs) { 
             d.unionSet(vec[1], vec[2]);
