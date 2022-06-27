@@ -63,6 +63,17 @@ public:
         }
         return count;
     }
+    bool validTree(int n, vector<vector<int>> & edges) {
+        Disjoint d(n);
+        for (auto vec : edges) { 
+            d.unionSet(vec[0], vec[1]);
+        }
+        int count = 0;
+        for (int i = 0; i < d.roots.size(); i++) { 
+            if (d.roots[i] == i) { count++; }
+        }
+        return count == 1 && edges.size() == n - 1;
+    }
 };
 
 int main() { 
