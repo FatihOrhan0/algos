@@ -20,6 +20,7 @@ public:
         dp[i].insert({biggest, ans});
         return ans;
     }
+    
     int lengthOfLIS(const vector<int> & nums) {
         this->nums = nums;
         if (nums.size() < 2) return nums.size();
