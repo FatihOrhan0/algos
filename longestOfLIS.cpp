@@ -20,7 +20,7 @@ public:
         dp[i].insert({biggest, ans});
         return ans;
     }
-    int lengthOfLIS(vector<int> & nums) {
+    int lengthOfLIS(const vector<int> & nums) {
         this->nums = nums;
         if (nums.size() < 2) return nums.size();
         this->dp = vector<unordered_map<int, int> > (nums.size(), unordered_map<int, int>());

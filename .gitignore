@@ -1,2 +1,4 @@
 *.exe
 test*
+my-app
+goPlayground.go
