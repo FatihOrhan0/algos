@@ -110,7 +110,7 @@ vector<node *> topologicalSort(const vector<node *> & graph) {
     }
     vector<node *> sortedGraph;
     while (!q.empty()) { 
-        node * n = q.top(); 
+        node * n = q.front(); 
         q.pop();
         visited++;
         for (auto edge : n->edges) { 
@@ -120,7 +120,7 @@ vector<node *> topologicalSort(const vector<node *> & graph) {
         }
         sortedGraph.push_back(n);
     }
-    if (visited != graphh.size()) return {};
+    if (visited != graph.size()) return {};
     return sortedGraph;
 }
 
