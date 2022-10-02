@@ -12,7 +12,10 @@ using namespace std;
 struct node {
     list<node *> edges;
     int dist = INT_MAX;
-    node() : dist(INT_MAX) { edges = list<node *>(); }
+    int val;
+    node() : val(0), dist(INT_MAX) {}
+    node(int n) : val(n), dist(INT_MAX) { edges = list<node *>(); }
+    bool colored = false;
 };
 
 vector<node *> createGraph(int n, double p) { 
@@ -67,6 +70,27 @@ bool BFS(const vector<node *> & nodes, int t) {
     return largest >= t;
 }
 
+void DFS(const vector<node *> & graph, int n, vector<bool> & visited, const unordered_map<node *, int> & hash) { 
+    visited[n] = true;
+    cout << graph[n]->val << endl;
+    for (node * edge : graph[n]->edges) { 
+        if (!visited[hash.find(edge)->second]) {
+            DFS(graph, hash.find(edge)->second, visited, hash);
+        }
+    }
+    graph[n]->colored = true;
+}
+
+void DFSDriver(const vector<node *> & graph) {
+    vector<bool> visited(graph.size(), false);
+    unordered_map<node *, int> hash;
+    for (int i = 0; i < graph.size(); i++) { 
+        hash[graph[i]] = i;
+    }
+    DFS(graph, 2, visited, hash);
+}
+
+
 
 void destruct(vector<node *> & g) { 
     for (auto n : g) delete n;
@@ -74,7 +98,7 @@ void destruct(vector<node *> & g) {
 
 int main() { 
     
-    vector<int> res;
+    /* vector<int> res;
     for (double c = 0.2; c <= 3.1; c += 0.2) { 
         int num = 0;
         for (int i = 0; i < 500; i++) { 
@@ -86,7 +110,44 @@ int main() {
     }
     for (int i = 0; i < res.size(); i++) { 
         cout << i + 1 << " " << res[i] << endl;
-    }
+    } */
+
+    node * one = new node(1);
+    node * two = new node(2);
+    node * three = new node(3);
+    node * four = new node(4);
+    node * five = new node(5);
+    node * six = new node(6);
+    node * seven = new node(7);
+    node * eight = new node(8);
+    one->edges.push_back(two);
+    one->edges.push_back(three);
+    two->edges.push_back(one);
+    two->edges.push_back(three);
+    two->edges.push_back(four);
+    two->edges.push_back(five);
+    three->edges.push_back(one);
+    three->edges.push_back(two);
+    three->edges.push_back(five);
+    three->edges.push_back(seven);
+    three->edges.push_back(eight);
+    four->edges.push_back(two);
+    four->edges.push_back(five);
+    five->edges.push_back(two);
+    five->edges.push_back(three);
+    five->edges.push_back(four);
+    five->edges.push_back(six);
+    six->edges.push_back(five);
+    seven->edges.push_back(three);
+    seven->edges.push_back(eight);
+    eight->edges.push_back(three);
+    eight->edges.push_back(seven);
+
+    vector<node *> nodes = {one, two, three, four, five, six, seven, eight};
+
+    DFSDriver(nodes);
+
+    destruct(nodes);
 
     return 0;
 }
