@@ -91,6 +91,39 @@ void DFSDriver(const vector<node *> & graph) {
 }
 
 
+vector<node *> topologicalSort(const vector<node *> & graph) { 
+    vector<int> degrees(graph.size(), 0);
+    unordered_map<node *, int> hash;
+    int visited = 0;
+    for (int i = 0; i < graph.size(); i++) { 
+        hash[graph[i]] = i;
+    }
+    //calculate the degrees for each node
+    for (int i = 0; i < graph.size(); i++) { 
+        for (auto edge : graph[i]->edges) { 
+            degrees[hash.find(edge)->second]++;
+        }
+    }
+    queue<node *> q;
+    for (int i = 0; i < degrees.size(); i++) { 
+        if (degrees[i] == 0) q.push(graph[i]);
+    }
+    vector<node *> sortedGraph;
+    while (!q.empty()) { 
+        node * n = q.top(); 
+        q.pop();
+        visited++;
+        for (auto edge : n->edges) { 
+            int temp = hash.find(edge)->second;
+            degrees[temp]--;
+            if (degrees[temp] == 0) q.push(graph[temp]);
+        }
+        sortedGraph.push_back(n);
+    }
+    if (visited != graphh.size()) return {};
+    return sortedGraph;
+}
+
 
 void destruct(vector<node *> & g) { 
     for (auto n : g) delete n;
@@ -122,30 +155,26 @@ int main() {
     node * eight = new node(8);
     one->edges.push_back(two);
     one->edges.push_back(three);
-    two->edges.push_back(one);
     two->edges.push_back(three);
     two->edges.push_back(four);
     two->edges.push_back(five);
-    three->edges.push_back(one);
-    three->edges.push_back(two);
     three->edges.push_back(five);
     three->edges.push_back(seven);
     three->edges.push_back(eight);
-    four->edges.push_back(two);
     four->edges.push_back(five);
-    five->edges.push_back(two);
-    five->edges.push_back(three);
-    five->edges.push_back(four);
     five->edges.push_back(six);
-    six->edges.push_back(five);
-    seven->edges.push_back(three);
     seven->edges.push_back(eight);
-    eight->edges.push_back(three);
-    eight->edges.push_back(seven);
 
     vector<node *> nodes = {one, two, three, four, five, six, seven, eight};
 
-    DFSDriver(nodes);
+    vector<node *> sorted = topologicalSort(nodes);
+
+    for (node * n : sorted) { 
+        cout << n->val << " ";
+    }
+    cout << endl; 
+
+
 
     destruct(nodes);
 
